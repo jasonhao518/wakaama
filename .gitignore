@@ -40,3 +40,4 @@ tlvdecode
 
 # SonarQube default work directory
 .scannerwork
+.DS_Store

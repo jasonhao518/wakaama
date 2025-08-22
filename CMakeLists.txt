@@ -1,12 +1,30 @@
-cmake_minimum_required(VERSION 3.21)
+idf_component_register(
+    SRC_DIRS
+        "coap/"
+        "coap/er-coap-13/"
+        "core/"
+        "data/"
 
-project(wakaama C)
+    PRIV_INCLUDE_DIRS
+        "core"
+        "coap/"
 
-include(wakaama.cmake)
+    INCLUDE_DIRS
+        "include"
+    )
 
-option(WAKAAMA_UNIT_TESTS "Enable build of Unit Tests" ON)
+target_compile_definitions(${COMPONENT_TARGET}
+                    PUBLIC
+                    "LWM2M_CLIENT_MODE"
+                    "LWM2M_COAP_DEFAULT_BLOCK_SIZE=256"
+                    "LWM2M_LOG_LEVEL=LWM2M_LOGGING_INFO"
+                    "LWM2M_COAP_SEPARATE_TIMEOUT=5"
+                    "LWM2M_COAP_DEFAULT_MAX_RETRANSMIT=4"
+                    "LWM2M_COAP_MAX_MESSAGE_SIZE=1024"
+                    "LWM2M_SUPPORT_SENML_JSON"
+                    "LWM2M_WITH_LOGS"
+                    )
 
-if(WAKAAMA_UNIT_TESTS)
-    enable_testing()
-    add_subdirectory(tests)
-endif()
+set(USES_TERMINAL_DOWNLOAD TRUE)
+set(USES_TERMINAL_CONFIGURE TRUE)
+set(USES_TERMINAL_BUILD TRUE)
